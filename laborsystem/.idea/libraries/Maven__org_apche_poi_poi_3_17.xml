@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apche.poi:poi:3.17">
+    <CLASSES>
+      <root url="jar:///Library/Apache/maven/maven-repository/repository/org/apche/poi/poi/3.17/poi-3.17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///Library/Apache/maven/maven-repository/repository/org/apche/poi/poi/3.17/poi-3.17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///Library/Apache/maven/maven-repository/repository/org/apche/poi/poi/3.17/poi-3.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

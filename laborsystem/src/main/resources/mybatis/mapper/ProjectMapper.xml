@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llk.laborsystem.mapper.contractors.ProjectMapper">
+    <select id="getProjectList" resultType="com.llk.laborsystem.bean.contractors.Project">
+        SELECT * FROM t_project
+        <where>
+            state=1
+            <if test="clsAll.length>0">
+                and cls_id IN
+                <foreach collection="clsAll" item="item" index="index" open="(" separator="," close=")">
+                  #{item}
+                </foreach>
+            </if>
+            <if test="name!='' and name!=null">
+                and name LIKE CONCAT("%",#{name},"%")
+            </if>
+            <if test="creditCode!='' and creditCode!=null">
+                and credit_code=#{creditCode}
+            </if>
+            <if test="address!='' and address!=null">
+                and address LIKE CONCAT("%",#{address},"%")
+            </if>
+        </where>
+        order by begin_time desc LIMIT #{currentPage},9
+    </select>
+
+    <select id="total" resultType="long">
+        SELECT count(id) FROM t_project
+        <where>
+            state=1
+            <if test="clsAll.length>0">
+                and cls_id IN
+                <foreach collection="clsAll" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="name!='' and name!=null">
+                and name LIKE CONCAT("%",#{name},"%")
+            </if>
+            <if test="creditCode!='' and creditCode!=null">
+                and credit_code=#{creditCode}
+            </if>
+            <if test="address!='' and address!=null">
+                and address LIKE CONCAT("%",#{address},"%")
+            </if>
+        </where>
+        order by begin_time desc
+    </select>
+    <insert id="addProject">
+      INSERT INTO t_project VALUES (0,#{project.name},#{project.abbreviation},#{project.provinceId},#{project.cityId},#{project.countyId},#{project.address},null,null,#{project.creditCode},#{project.money},null,now(),null,#{project.permission},#{project.contact},#{project.phone},#{project.eMail},#{project.intro},null,#{project.clsId},1,#{project.depId},#{project.shenfenzheng},#{project.website})
+    </insert>
+</mapper>

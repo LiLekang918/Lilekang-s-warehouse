@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llk.laborsystem.mapper.project.ProjectsMapper">
+<!--    查找-->
+    <select id="getProjectList" resultType="com.llk.laborsystem.bean.project.Projects">
+        SELECT * FROM t_items i JOIN t_constructionUnits c JOIN t_generalContractors g JOIN t_project_type p
+        <where>
+            i.construction_unit=c.id AND i.general_contractor=g.id AND i.cls_id=p.id
+            <if test="projects.buildingName!='' and projects.buildingName!=null">
+                AND i.building_name LIKE CONCAT("%",#{projects.buildingName},"%")
+            </if>
+        </where>
+    </select>
+<!--    添加-->
+    <insert id="addProject">
+        INSERT INTO t_items VALUES(0,#{projects.number},#{projects.secretKey},#{projects.appKey},#{projects.appSecret},#{projects.buildingName},#{projects.projectAbbreviation},#{projects.provinceId},#{projects.cityId},#{projects.countyId},#{projects.detailedAddress},#{projects.constructionUnit},#{projects.generalContractor},#{projects.buildUnit},#{projects.creditCode},#{projects.money},#{projects.coveredArea},#{projects.startData},#{projects.completeData},#{projects.licence},#{projects.contacts},#{projects.phone},#{projects.email},#{projects.intro},#{projects.image},#{projects.isWork},#{projects.emphasis},#{projects.isOpen},#{projects.clsId},#{projects.signingDate},#{projects.itemState},#{projects.videoConference},#{projects.username},#{projects.password},#{projects.coordinate})
+    </insert>
+</mapper>

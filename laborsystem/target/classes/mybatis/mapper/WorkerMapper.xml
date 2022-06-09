@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llk.laborsystem.mapper.worker.WorkerMapper">
+
+    <select id="workerList" resultType="com.llk.laborsystem.bean.worker.Worker">
+        select * from t_worker w JOIN t_nation n JOIN t_education e JOIN t_worker_seed s JOIN t_worker_type t JOIN t_team_group g
+            <where>
+                w.nation_id=n.n_id AND w.edu_id=e.noid AND w.group_id=g.id AND w.w_s_id=s.id AND w.w_t_id=t.noid AND hide=1
+                <if test="worker.name!='' and worker.name!=null">
+                    and w.name like CONCAT("%",#{worker.name},"%")
+                </if>
+                <if test="worker.papersId!='' and worker.papersId!=null">
+                    AND papers_id=#{worker.papersId}
+                </if>
+                <if test="worker.provinceId!='' and worker.provinceId!=null">
+                    AND w.province_id=#{worker.provinceId}
+                </if>
+
+                <if test="worker.cityId!='' and worker.cityId!=null">
+                    AND w.city_id=#{worker.cityId}
+                </if>
+                <if test="worker.countyId!='' and worker.countyId!=null">
+                    AND w.county_id=#{worker.countyId}
+                </if>
+                <if test="worker.hisState!='' and worker.hisState!=null">
+                    and w.his_state=#{worker.hisState}
+                </if>
+                <if test="worker.formal!='' and worker.formal!=null">
+                    and w.formal=#{worker.formal}
+                </if>
+                <if test="worker.workerSeedAll.length>0 and worker.workerSeedAll!=null">
+                    and w.w_s_id IN
+                    <foreach collection="worker.workerSeedAll" item="item" index="index" open="(" separator="," close=")">
+                      #{item}
+                    </foreach>
+                </if>
+                <if test="worker.educationAll.length>0 and worker.educationAll!=null">
+                    and w.edu_id IN
+                    <foreach collection="worker.educationAll" item="item" index="index" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+            </where>
+            LIMIT #{worker.currentPage},12
+    </select>
+
+    <select id="total" resultType="long">
+        select COUNT(w.id) from t_worker w JOIN t_nation n JOIN t_education e JOIN t_worker_seed s JOIN t_worker_type t JOIN t_team_group g
+        <where>
+            w.nation_id=n.n_id AND w.edu_id=e.noid AND w.group_id=g.id AND w.w_s_id=s.id AND w.w_t_id=t.noid AND hide=1
+            <if test="worker.name!='' and worker.name!=null">
+                and w.name like CONCAT("%",#{worker.name},"%")
+            </if>
+            <if test="worker.papersId!='' and worker.papersId!=null">
+                AND papers_id=#{worker.papersId}
+            </if>
+            <if test="worker.provinceId!='' and worker.provinceId!=null">
+                AND w.province_id=#{worker.provinceId}
+            </if>
+
+            <if test="worker.cityId!='' and worker.cityId!=null">
+                AND w.city_id=#{worker.cityId}
+            </if>
+            <if test="worker.countyId!='' and worker.countyId!=null">
+                AND w.county_id=#{worker.countyId}
+            </if>
+            <if test="worker.hisState!='' and worker.hisState!=null">
+                and w.his_state=#{worker.hisState}
+            </if>
+            <if test="worker.formal!='' and worker.formal!=null">
+                and w.formal=#{worker.formal}
+            </if>
+            <if test="worker.workerSeedAll.length>0 and worker.workerSeedAll!=null">
+                and w.w_s_id IN
+                <foreach collection="worker.workerSeedAll" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="worker.educationAll.length>0 and worker.educationAll!=null">
+                and w.edu_id IN
+                <foreach collection="worker.educationAll" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getWorkerById" resultType="com.llk.laborsystem.bean.worker.Worker">
+        select * from t_worker w JOIN t_nation n JOIN t_education e JOIN t_worker_seed s JOIN t_worker_type t JOIN t_team_group g WHERE w.nation_id=n.n_id AND w.edu_id=e.noid AND w.group_id=g.id AND w.w_s_id=s.id AND w.w_t_id=t.noid and w.id=#{worker.id}
+    </select>
+    <!--<insert id="addWorker">-->
+
+
+    <!--</insert>-->
+</mapper>
